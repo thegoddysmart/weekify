@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Execution Planner</title>
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1><i class="fas fa-sparkles"></i> Weekly Execution Planner</h1>
+            <p>Transform your productivity with structured planning and smart prioritization</p>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <!-- Week Identification -->
+        <div class="section">
+            <div class="section-title">
+                <span class="emoji"><i class="fas fa-calendar-alt"></i></span>
+                <span>Week Identification</span>
+            </div>
+            <div class="week-controls">
+                <input type="date" id="weekStartDate" class="week-input">
+                <div id="weekDisplay" class="week-display"></div>
+                <button class="btn btn-secondary" onclick="setCurrentWeek()">
+                    <i class="fas fa-calendar-day"></i> Current Week
+                </button>
+            </div>
+        </div>
+
+        <!-- Task Brain Dump -->
+        <div class="section">
+            <div class="section-title">
+                <span class="emoji"><i class="fas fa-brain"></i></span>
+                <span>Task Brain Dump</span>
+            </div>
+            <p class="section-description">List everything you want to get done this week. Don't overthink!</p>
+            <div id="taskList">
+                <!-- Tasks will be dynamically added here -->
+            </div>
+            <button class="btn" onclick="addNewTask()">
+                <i class="fas fa-plus"></i> Add Task
+            </button>
+        </div>
+
+        <!-- Life Areas -->
+        <div class="section">
+            <div class="section-title">
+                <span class="emoji"><i class="fas fa-heart"></i></span>
+                <span>Life Areas Focus</span>
+            </div>
+            <p class="section-description">Which life areas do you want to focus on this week?</p>
+            <div class="life-areas-container" id="lifeAreasContainer">
+                <!-- Life areas will be populated here -->
+            </div>
+        </div>
+
+        <!-- Sprint Blocks -->
+        <div class="section">
+            <div class="section-title">
+                <span class="emoji"><i class="fas fa-rocket"></i></span>
+                <span>Sprint Blocks (2-3 hours of focused work)</span>
+            </div>
+            <p class="section-description">When will you do your most important work?</p>
+            <div id="sprintBlocksList">
+                <!-- Sprint blocks will be added here -->
+            </div>
+            <button class="btn" onclick="addSprintBlock()">
+                <i class="fas fa-plus"></i> Add Sprint Block
+            </button>
+        </div>
+
+        <!-- Auto-Generated Insights -->
+        <div class="section">
+            <div class="section-title">
+                <span class="emoji"><i class="fas fa-magic"></i></span>
+                <span>Auto-Generated Insights</span>
+            </div>
+            <button class="btn" onclick="generateInsights()">
+                <i class="fas fa-cogs"></i> Generate Insights
+            </button>
+            
+            <div id="insightsContainer" class="insights-container">
+                <!-- Top 3 Goals -->
+                <div id="top3Goals" class="auto-generated">
+                    <h3><i class="fas fa-trophy"></i> Top 3 Goals This Week</h3>
+                    <div id="goalsList"></div>
+                </div>
+
+                <!-- Categorized Tasks -->
+                <div id="categorizedTasks" class="categorized-tasks">
+                    <h3><i class="fas fa-th-large"></i> Task Categories (Eisenhower Matrix)</h3>
+                    <div class="categories-grid">
+                        <div class="category do-now">
+                            <h4><i class="fas fa-fire"></i> Do Now (Important + Urgent)</h4>
+                            <div id="doNowTasks"></div>
+                        </div>
+                        <div class="category schedule-later">
+                            <h4><i class="fas fa-clock"></i> Schedule Later (Important, Not Urgent)</h4>
+                            <div id="scheduleLaterTasks"></div>
+                        </div>
+                        <div class="category optional">
+                            <h4><i class="fas fa-star"></i> Optional (Urgent, Not Important)</h4>
+                            <div id="optionalTasks"></div>
+                        </div>
+                        <div class="category ignore">
+                            <h4><i class="fas fa-trash"></i> Consider Ignoring (Not Important, Not Urgent)</h4>
+                            <div id="ignoreTasks"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Projects and Focus Areas -->
+                <div id="projectsAndAreas" class="auto-generated">
+                    <h3><i class="fas fa-tags"></i> Projects & Focus Areas</h3>
+                    <div id="projectTags"></div>
+                    <div id="focusAreaTags"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Weekly Table -->
+        <div class="section">
+            <div class="section-title">
+                <span class="emoji"><i class="fas fa-table"></i></span>
+                <span>Weekly Execution Table</span>
+            </div>
+            <button class="btn" onclick="generateWeeklyTable()">
+                <i class="fas fa-calendar-week"></i> Generate Weekly View
+            </button>
+            <div id="weeklyTableContainer"></div>
+        </div>
+
+        <!-- Advanced Analytics -->
+        <div class="section">
+            <div class="section-title">
+                <span class="emoji"><i class="fas fa-chart-line"></i></span>
+                <span>Analytics & Insights</span>
+            </div>
+            <div class="analytics-grid">
+                <div class="analytic-card">
+                    <h4><i class="fas fa-tasks"></i> Productivity Metrics</h4>
+                    <div id="productivityMetrics"></div>
+                </div>
+                <div class="analytic-card">
+                    <h4><i class="fas fa-clock"></i> Time Distribution</h4>
+                    <div id="timeDistribution"></div>
+                </div>
+                <div class="analytic-card">
+                    <h4><i class="fas fa-bullseye"></i> Focus Areas</h4>
+                    <div id="focusAnalysis"></div>
+                </div>
+            </div>
+            <button class="btn" onclick="generateAnalytics()">
+                <i class="fas fa-chart-bar"></i> Generate Analytics
+            </button>
+        </div>
+
+        <!-- Smart Recommendations -->
+        <div class="section">
+            <div class="section-title">
+                <span class="emoji"><i class="fas fa-lightbulb"></i></span>
+                <span>Smart Recommendations</span>
+            </div>
+            <div id="recommendationsContainer" class="recommendations-container">
+                <div class="empty-state">
+                    <i class="fas fa-brain"></i>
+                    <p>Generate insights to see personalized recommendations</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Export Controls -->
+        <div class="section">
+            <div class="section-title">
+                <span class="emoji"><i class="fas fa-download"></i></span>
+                <span>Export & Save</span>
+            </div>
+            <div class="export-controls">
+                <button class="btn" onclick="exportToJSON()">
+                    <i class="fas fa-file-code"></i> Export JSON
+                </button>
+                <button class="btn" onclick="exportToPDF()">
+                    <i class="fas fa-file-pdf"></i> Export PDF
+                </button>
+                <button class="btn" onclick="exportToCSV()">
+                    <i class="fas fa-file-csv"></i> Export CSV
+                </button>
+                <button class="btn" onclick="printSummary()">
+                    <i class="fas fa-print"></i> Print Summary
+                </button>
+                <button class="btn btn-secondary" onclick="saveToLocalStorage()">
+                    <i class="fas fa-save"></i> Save Locally
+                </button>
+                <button class="btn btn-secondary" onclick="loadFromLocalStorage()">
+                    <i class="fas fa-upload"></i> Load Saved
+                </button>
+                <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importFromJSON(event)">
+                <button class="btn" onclick="document.getElementById('importFile').click()">
+                    <i class="fas fa-file-import"></i> Import JSON
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Keyboard Shortcuts Help -->
+    <div id="shortcutsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeShortcutsModal()">&times;</span>
+            <h2><i class="fas fa-keyboard"></i> Keyboard Shortcuts</h2>
+            <div class="shortcuts-list">
+                <div class="shortcut-item">
+                    <kbd>Ctrl + N</kbd> <span>Add new task</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Ctrl + S</kbd> <span>Save to local storage</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Ctrl + E</kbd> <span>Export to JSON</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Ctrl + G</kbd> <span>Generate insights</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Ctrl + P</kbd> <span>Print summary</span>
+                </div>
+                <div class="shortcut-item">
+                    <kbd>Ctrl + ?</kbd> <span>Show this help</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Button -->
+    <button class="help-btn" onclick="showShortcutsModal()" title="Keyboard Shortcuts (Ctrl + ?)">
+        <i class="fas fa-question"></i>
+    </button>
+
+    <script src="utils.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
