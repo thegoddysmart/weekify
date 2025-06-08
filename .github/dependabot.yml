@@ -5,7 +5,7 @@
 
 version: 2
 updates:
-  - package-ecosystem: "" # We will set it up later when we start using packages
+  - package-ecosystem: "github-actions" # We will set it up later when we start using packages
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
